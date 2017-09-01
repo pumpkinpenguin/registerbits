@@ -1,0 +1,43 @@
+h1{color: DarkBlue;
+text-align: center;} 
+
+a:link, a:visited {
+    color: darkblue;
+    text-decoration: none; }
+a:hover, a:focus {
+   color: red;
+   text-decoration: underline;}
+
+.leftImage {
+  float: left; 
+  padding: 30px; }
+
+.rightImage {
+  float: right;
+  padding: 30px;}
+
+body {
+   margin: 30px;
+   padding-left: 100px;
+   padding-right: 100px;
+   text-align: left;} 
+
+#container {
+  width: 970px;
+  background: white;
+  margin: 0px auto;
+  text-align: left;
+  font-family: arial;}
+
+#mainContent {
+  width: 700px;
+  background: white;
+  text-align: left;
+  margin-left: 270px;}
+
+#sidebar {
+  float: left;
+  width: 250px;
+  background: lightgray;
+  padding: 5px;
+  text-align: left; }

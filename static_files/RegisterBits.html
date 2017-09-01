@@ -1,0 +1,94 @@
+<html>
+
+<!--
+
+Start ../server.js and then visit this URL to view this webpage:
+
+http://localhost:3000/RegisterBits.html
+
+-->
+
+<head>
+<title>RegisterBits</title>
+
+<script src="jquery-1.11.3.min.js"></script>
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+  console.log("Hello world!");
+  $(document).ajaxError(function() {
+    alert("Sorry, there was a problem!");
+  });
+
+  $("#submitButton").click(function() {
+    var registerToLookup = $("#mydropdown").val();
+    var registerBinary = $("#my_binary").val();
+    registerBinary = String("00000000000000000000000000000000" + registerBinary).slice(-32); 
+    console.log(registerToLookup);
+    console.log(registerBinary);
+    $.ajax({
+      // The URL for the request -- note the simple REST API!
+      // all URLs are relative to http://localhost:3000/
+      url: "requested_register/" + registerToLookup,
+      type: "GET",
+      dataType : "json", // this URL returns data in JSON format
+      success: function( data ) {
+      	console.log("You received some data!");
+	console.log(data);
+	console.log(data.myRegister);
+	console.log(data.myBoundary);
+	console.log(data.myImage);
+	$("#registerDiv").html("Register " + data.myRegister);
+	$("#imageDiv").attr("src", data.myImage);
+	$("#myTable").children().remove();
+	var color1 = '#cff';
+	var color2 = '#fcc';
+	var color = color1;
+	for(var index=0; index<registerBinary.length; index++){
+		if(data.myBoundary.charAt(index) == 1){
+			color = color2;
+		}
+		else{
+			color = color1;
+		}
+	$("#myTable").append("<td style=\"width:25px;height:25px;background: "+ color +"\";><center>" + registerBinary.charAt(index) + "</center></td>"); 
+	}
+      },
+    });
+  });
+});
+</script>
+
+
+</head>
+<body style="padding-left:70px;padding-right:70px">
+<h1> Register Bits </h1>
+	Register name
+	<select id="mydropdown">
+		<option value="Floating Point Status and Control">Floating Point Status and Control</option>
+		<option value="Condition Register">Condition Register</option>
+		<option value="Integer Exception Register">Integer Exception Register</option>
+		<option value="Count Register">Count Register</option>
+		<option value="Link Register">Link Register</option>
+	</select>
+	<br/>
+	<br/>
+	Register value <input id="my_binary" type=text size="32"/>
+	<br/>
+	<br/>
+	<button id="submitButton">Submit</button>
+	<br/>
+	<br/>
+
+	<div id="registerDiv"></div>
+	<br/>
+	<br/>
+	<table id="myTable">
+		<tr>
+		</tr>
+	</table>
+	</br>
+	<img id="imageDiv" style="width: 1000px;"/>
+</body>
+</html>
