@@ -23,7 +23,20 @@ $(document).ready(function() {
 
   $("#submitButton").click(function() {
     var registerToLookup = $("#mydropdown").val();
-    var registerBinary = $("#my_binary").val();
+    var registerBinaryTemp = $("#my_binary").val();
+    var registerBinary = "";
+    var hexIndex=0; 
+    var zeros="";
+	  if(registerBinaryTemp.substring(0,2) == '0x'){
+		  registerBinaryTemp = registerBinaryTemp.replace('0x', '');
+		  for(hexIndex; hexIndex<=registerBinaryTemp.length-1; hexIndex++){
+			  zeros = zeros + "0000";
+			  registerBinary = registerBinary + String(zeros + parseInt(registerBinaryTemp.substr(hexIndex, 1),16).toString(2)).slice(-4);
+		  }
+	  }
+	  else {
+              registerBinary = registerBinaryTemp;
+	  }
     registerBinary = String("00000000000000000000000000000000" + registerBinary).slice(-32); 
     console.log(registerToLookup);
     console.log(registerBinary);
@@ -75,6 +88,9 @@ $(document).ready(function() {
 	<br/>
 	<br/>
 	Register value <input id="my_binary" type=text size="32"/>
+	<br/>
+	<br/>
+	hex or bin (e.g. 0xbeef or 1111)
 	<br/>
 	<br/>
 	<button id="submitButton">Submit</button>
