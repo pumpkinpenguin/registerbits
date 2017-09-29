@@ -1,12 +1,14 @@
-// Prerequisites - first run:
-//   npm install express
-//   npm install body-parser
-//
-// then run:
-//   node server.js
-//
-// and the frontend can be viewed at http://localhost:3000/RegisterBits.html
-
+/* 
+ * This is the backend of the web application. This file can be run
+ * using node. First execute
+ *     npm install express
+ *     npm install body-parser
+ * Next, execute
+ *     node server.js
+ *
+ * Visit the frontend at http://localhost:3000/RegisterBits.html
+ *
+*/
 var express = require('express');
 var app = express();
 var port = process.env.PORT || 8080;
@@ -16,23 +18,12 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
-// put all of your static files (e.g., HTML, CSS, JS, JPG) in the static_files/
-// sub-directory, and the server will serve them from there. e.g.,:
-//
-// http://localhost:3000/RegisterBits.html
-// http://localhost:3000/CR.png
-//
-// will send the file static_files/CR.png to the user's Web browser
+//tell web framework to serve files from /static_files
 var path = require('path');
 var rootPath = path.normalize(__dirname + '/');
 app.use(express.static(rootPath + '/static_files'));
 
-// simulates a database in memory, to make this example simple and
-// self-contained (so that you don't need to set up a separate database).
-// note that a real database will save its data to the hard drive so
-// that they become persistent, but this fake database will be reset when
-// this script restarts. however, as long as the script is running, this
-// database can be modified at will.
+// use an array instead of a real database
 var fakeDatabase = [
   	{myRegister: 'Floating Point Status and Control', myBoundary: '01010101010101010000101010101011', myImage: 'FPSC.png'},
 	{myRegister: 'Condition Register', myBoundary: '00001111000011110000111100001111', myImage: 'CR.png'},
@@ -55,10 +46,11 @@ app.get('/requested_register/*', function (req, res) {
   res.send('{}'); // failed, so return an empty JSON object!
 });
 
-// start the server on http://localhost:3000/
+// port is determined dynamically
 app.listen(port, function() {
     console.log('Server started at http://localhost:%s/', port);
 })
+// use this for testing purposes when calling 'node server.js'
 //var server = app.listen(3000, function () {
 //  var port = server.address().port;
 //  console.log('Server started at http://localhost:%s/', port);
