@@ -2,9 +2,21 @@
 
 <!--
 
-Start ../server.js and then visit this URL to view this webpage:
+RegisterBits.html:
 
-http://localhost:3000/RegisterBits.html
+This file is the front-end of the web application. User interaction with the web 
+application happens here.
+
+Inputs:
+
+Register name - Select from a drop down menu.
+
+Register value - Input as a hexidecimal (prefaced by '0x') or as binary.
+
+Outputs:
+
+Register value is displayed with each bit color-coded to help visualize the bit
+fields. An image of a table explaining each bit field is also displayed.
 
 -->
 
@@ -41,8 +53,6 @@ $(document).ready(function() {
     console.log(registerToLookup);
     console.log(registerBinary);
     $.ajax({
-      // The URL for the request -- note the simple REST API!
-      // all URLs are relative to http://localhost:3000/
       url: "requested_register/" + registerToLookup,
       type: "GET",
       dataType : "json", // this URL returns data in JSON format
